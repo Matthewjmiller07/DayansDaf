@@ -1,0 +1,36 @@
+name: Update Podcast RSS
+
+on:
+  schedule:
+    - cron: "0 23 * * *"  # Runs daily at 5 PM CST (23:00 UTC)
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  update_rss:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install requests csv datetime
+
+      - name: Fetch New Episodes
+        run: python fetch_new_episodes.py  # Fetches new episodes and updates CSV
+
+      - name: Run RSS Generator Script
+        run: python generate_rss.py  # Generates updated RSS feed
+
+      - name: Commit and Push Updated Files
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "your-email@example.com"
+          git add reiss_daf_mp3s.csv reiss_daf_podcast.xml
+          git commit -m "Updated CSV and RSS Feed"
+          git push
