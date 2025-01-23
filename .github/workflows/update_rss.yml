@@ -2,7 +2,7 @@ name: Update Podcast RSS
 
 on:
   schedule:
-    - cron: "0 23 * * *"  # Runs daily at 5 PM CST (23:00 UTC)
+    - cron: "15 4 * * *"  # Runs daily at 10:15 PM CST 
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
