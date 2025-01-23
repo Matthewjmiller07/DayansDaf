@@ -19,7 +19,7 @@ jobs:
           python-version: "3.x"
 
       - name: Install dependencies
-        run: pip install requests csv datetime
+        run: pip install requests
 
       - name: Fetch New Episodes
         run: python fetch_new_episodes.py  # Fetches new episodes and updates CSV
