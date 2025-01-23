@@ -3,7 +3,7 @@ name: Update Podcast RSS
 on:
   schedule:
     - cron: "15 4 * * *"  # Runs daily at 10:15 PM CST (4:15 AM UTC)
-  workflow_dispatch:  # Allows manual trigger
+  workflow_dispatch:   # Allows manual trigger
 
 jobs:
   update_rss:
@@ -30,12 +30,9 @@ jobs:
         run: python generate_rss.py  # Generates updated RSS feed
 
       - name: Commit and Push Updated Files
-        env:
-          CLASSIC_PAT: ${{ secrets.CLASSIC_PAT }}
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
-          git remote set-url origin https://${{ secrets.CLASSIC_PAT }}@github.com/${{ github.repository }}.git
           git pull origin main  # Ensure latest changes before pushing
           git add reiss_daf_mp3s.csv reiss_daf_podcast.xml
           git diff --quiet && git diff --staged --quiet || git commit -m "Updated CSV and RSS Feed"
